@@ -40,7 +40,7 @@ export const SettingsPage = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-8 text-left">
       {/* Header */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 flex items-center justify-between">
+      <div className="glass-panel card-bg p-6 sm:p-8 rounded-3xl flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-white shadow-lg">
             <Settings className="w-6 h-6" />
@@ -53,8 +53,8 @@ export const SettingsPage = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Navigation Tabs */}
-        <div className="lg:col-span-4 glass-panel p-4 rounded-3xl border border-slate-800 space-y-2">
+      {/* Navigation Tabs */}
+      <div className="lg:col-span-4 glass-panel card-bg p-4 rounded-3xl space-y-2">
           {[
             { id: 'account', label: 'Account Profile', icon: User },
             { id: 'interview', label: 'Interview Preferences', icon: Sliders },
@@ -70,8 +70,8 @@ export const SettingsPage = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 p-3 rounded-2xl text-xs font-bold transition-all ${
                   isActive 
-                    ? 'bg-indigo-600 text-white shadow-md' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-indigo-600/12 text-indigo-300 shadow-md border border-indigo-500/16' 
+                    : 'text-muted hover:text-current hover:bg-slate-800/8'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -82,7 +82,7 @@ export const SettingsPage = () => {
         </div>
 
         {/* Tab Contents */}
-        <div className="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
+        <div className="lg:col-span-8 glass-panel card-bg p-6 sm:p-8 rounded-3xl space-y-6">
           {savedSuccess && (
             <div className="bg-emerald-500/10 border border-emerald-500/30 p-3.5 rounded-2xl text-xs text-emerald-400 font-bold flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4" />
@@ -96,30 +96,30 @@ export const SettingsPage = () => {
               <h2 className="text-lg font-bold text-white">Account Details</h2>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Full Name</label>
+                  <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-1">Full Name</label>
                   <input 
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-transparent border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-current focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Email Address</label>
+                  <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-1">Email Address</label>
                   <input 
                     type="email"
                     value={user?.email || 'pratibha@example.com'}
                     disabled
-                    className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed"
+                    className="w-full bg-transparent border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-muted cursor-not-allowed"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Target Job Role</label>
+                  <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-1">Target Job Role</label>
                   <input 
                     type="text"
                     value={targetRole}
                     onChange={(e) => setTargetRole(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-transparent border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-current focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>

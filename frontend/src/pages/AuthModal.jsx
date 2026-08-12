@@ -18,7 +18,7 @@ import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import API_BASE_URL from '../config';
 
 export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }) => {
-  const { loginUser } = useAuth();
+  const { loginUser, user } = useAuth();
   const { setLanguage } = useLanguage();
   const [mode, setMode] = useState(initialMode); // 'login', 'register', 'onboarding'
   const [step, setStep] = useState(1);
@@ -38,12 +38,30 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
 
   if (!isOpen) return null;
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      alert('Passwords do not match!');
       return;
     }
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, target_role: targetRole })
+      });
+      const data = await res.json();
+      if (res.ok && data.user) {
+        loginUser(data.user);
+        setMode('onboarding');
+        setStep(1);
+        return;
+      }
+    } catch (err) {
+      // fallthrough to local onboarding
+    }
+
+    // Fallback: continue with local onboarding if register failed
     setMode('onboarding');
     setStep(1);
   };
@@ -57,26 +75,15 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
         body: JSON.stringify({ email, password })
       });
       const data = await res.json();
-      if (data.user) {
+      if (res.ok && data.user) {
         loginUser(data.user);
         onComplete();
-      } else {
-        // Fallback demo login
-        loginUser({
-          id: 1,
-          name: name || 'Pratibha',
-          email,
-          target_role: targetRole,
-          skills: selectedSkills,
-          experience_level: experience,
-          language: selectedLanguage,
-          streak: 7,
-          xp: 150,
-          interview_readiness: 82
-        });
-        onComplete();
+        return;
       }
+      // If login failed, show message
+      alert(data.error || 'Login failed. Check credentials.');
     } catch (err) {
+      alert('Unable to reach server. Using offline demo account.');
       loginUser({
         id: 1,
         name: name || 'Pratibha',
@@ -95,8 +102,34 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
 
   const finishOnboarding = async () => {
     setLanguage(selectedLanguage);
+    // If we have a server-side user (from register), persist onboarding to backend
+    if (user && user.id) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/onboarding`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: user.id,
+            target_role: targetRole,
+            skills: selectedSkills,
+            experience_level: experience,
+            language: selectedLanguage
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.user) {
+          loginUser(data.user);
+          onComplete();
+          return;
+        }
+      } catch (err) {
+        // fallthrough to local update
+      }
+    }
+
+    // Fallback local-only user
     const userData = {
-      id: 1,
+      id: user?.id || Date.now(),
       name,
       email,
       target_role: targetRole,
@@ -121,7 +154,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="relative w-full max-w-xl bg-[#131b2e] border border-slate-800 rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 text-left">
+      <div className="relative w-full max-w-xl card-bg rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 text-left">
         {/* Close Button */}
         <button 
           onClick={onClose}
@@ -152,7 +185,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none"
+                  className="w-full bg-transparent border border-slate-700 focus:border-indigo-500 rounded-xl pl-10 pr-4 py-3 text-sm text-current focus:outline-none"
                   placeholder="name@example.com"
                   required
                 />
@@ -167,7 +200,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none"
+                  className="w-full bg-transparent border border-slate-700 focus:border-indigo-500 rounded-xl pl-10 pr-4 py-3 text-sm text-current focus:outline-none"
                   placeholder="••••••••"
                   required
                 />
@@ -211,7 +244,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full bg-transparent border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-current focus:outline-none focus:border-indigo-500"
                 required
               />
             </div>
@@ -222,7 +255,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', onComplete }
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full bg-transparent border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-current focus:outline-none focus:border-indigo-500"
                 required
               />
             </div>

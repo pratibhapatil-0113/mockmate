@@ -7,29 +7,48 @@
     --card-border: rgba(255, 255, 255, 0.08);
     --accent-indigo: #6366f1;
     --accent-cyan: #06b6d4;
+    --glass-bg: rgba(19, 27, 46, 0.7);
+    --glass-bg-strong: rgba(19, 27, 46, 0.85);
+    --text-primary: #f1f5f9;
+    --muted: #94a3b8;
+  }
+
+  /* Light mode variables */
+  .light-mode :root {
+    --bg-dark: #f7fafc;
+    --card-dark: #ffffff;
+    --card-border: rgba(2,6,23,0.06);
+    --accent-indigo: #4f46e5;
+    --accent-cyan: #0891b2;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-bg-strong: rgba(255, 255, 255, 0.95);
+    --text-primary: #0b1220;
+    --muted: #475569;
   }
 
   body {
     background-color: var(--bg-dark);
-    color: #f1f5f9;
+    color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 /* Glassmorphism utility */
 .glass-panel {
-  background: rgba(19, 27, 46, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
 }
 
 .glass-panel-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .glass-card-hover {
@@ -62,6 +81,18 @@
 
 .ai-pulse-glow {
   animation: ai-glow 3s infinite ease-in-out;
+}
+
+/* Variable-driven card background utility for light/dark modes */
+.card-bg {
+  background-color: var(--card-dark);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+}
+
+/* muted text utility that follows theme variables */
+.text-muted {
+  color: var(--muted) !important;
 }
 
 /* Custom Scrollbars */

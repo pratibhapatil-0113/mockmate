@@ -65,6 +65,19 @@ export const Dashboard = ({ onNavigate }) => {
       .catch(() => {});
   }, [user]);
 
+  const getGreeting = () => {
+    try {
+      const hour = new Date().getHours();
+      if (hour < 5) return 'Good night';
+      if (hour < 12) return 'Good morning';
+      if (hour < 17) return 'Good afternoon';
+      if (hour < 21) return 'Good evening';
+      return 'Good night';
+    } catch (e) {
+      return 'Hello';
+    }
+  };
+
   const radarData = {
     labels: ['Technical', 'Communication', 'Problem Solving', 'Confidence', 'Coding'],
     datasets: [
@@ -121,7 +134,7 @@ export const Dashboard = ({ onNavigate }) => {
             <span>AI Career Cockpit Active</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Good evening, {user?.name || 'Pratibha'} 👋
+            {getGreeting()}, {user?.name || 'Pratibha'} 👋
           </h1>
           <p className="text-slate-400 text-sm sm:text-base font-medium">
             Ready for your next challenge? Your AI coach has prepared customized questions.

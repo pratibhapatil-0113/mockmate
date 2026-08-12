@@ -79,9 +79,27 @@ const AppContent = () => {
       <Navigation activeTab={activeTab} setActiveTab={(tab) => { setViewingReportId(null); setActiveTab(tab); }} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="flex-1 p-4 sm:p-8 pb-24 md:pb-8">
-          {renderActiveTab()}
+      <div className="flex-1 flex flex-col min-w-0 px-4 sm:px-8">
+        {/* Top header */}
+        <div className="w-full pt-6 pb-4">
+          <div className="glass-panel p-3 sm:p-4 rounded-2xl border-slate-800 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/logo.svg" alt="MockMate" className="w-8 h-8 rounded-md" />
+              <input
+                placeholder="Search tutorials, questions or modules..."
+                className="bg-transparent placeholder:text-muted text-sm text-current px-3 py-2 rounded-xl border border-transparent focus:border-indigo-500 focus:ring-0 outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-muted">Welcome back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}</div>
+            </div>
+          </div>
+        </div>
+
+        <main className="flex-1 pb-24 md:pb-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">{renderActiveTab()}</div>
+          </div>
         </main>
       </div>
 

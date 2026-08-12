@@ -44,12 +44,10 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
   return (
     <>
       {/* Top Mobile Bar */}
-      <header className="md:hidden flex items-center justify-between px-4 py-3 bg-[#0f172a]/95 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md">
+      <header className="md:hidden flex items-center justify-between px-4 py-3 bg-transparent sticky top-0 z-50">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <Sparkles className="w-4 h-4 text-white" />
-          </div>
-          <span className="font-bold text-lg text-white tracking-tight">MockMate</span>
+          <img src="/logo.svg" alt="MockMate" className="w-8 h-8 rounded-md shadow-lg" />
+          <span className="font-bold text-lg text-current tracking-tight">MockMate</span>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full text-xs font-semibold">
@@ -66,19 +64,17 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
       </header>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-[#0f172a] border-r border-slate-800 h-screen sticky top-0 z-40 select-none">
+      <aside className="hidden md:flex flex-col w-64 card-bg h-screen sticky top-0 z-40 select-none border-r border-slate-800">
         {/* Brand Header */}
         <div className="p-5 border-b border-slate-800/80">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-              <Sparkles className="w-5 h-5 text-white animate-pulse" />
-            </div>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
+            <img src="/logo.svg" alt="MockMate" className="w-10 h-10 rounded-md shadow-lg" />
             <div>
-              <h1 className="font-bold text-xl text-white tracking-tight leading-none flex items-center gap-1.5">
+              <h1 className="font-bold text-xl text-current tracking-tight leading-none flex items-center gap-1.5">
                 MockMate
                 <span className="text-[10px] uppercase font-extrabold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-1.5 py-0.5 rounded">v1.0</span>
               </h1>
-              <p className="text-[11px] text-slate-400 mt-1 font-medium truncate">AI Career Cockpit</p>
+              <p className="text-[11px] text-muted mt-1 font-medium truncate">AI Career Cockpit</p>
             </div>
           </div>
         </div>
@@ -88,7 +84,7 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            return (
+              return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
@@ -113,7 +109,7 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
         </div>
 
         {/* Bottom Preferences & Profile */}
-        <div className="p-3 border-t border-slate-800/80 space-y-2 bg-[#0b0f19]/40">
+        <div className="p-3 border-t border-slate-800/80 space-y-2">
           {/* Language Selector */}
           <div className="relative">
             <button 
@@ -128,7 +124,7 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
             </button>
 
             {langDropdownOpen && (
-              <div className="absolute bottom-full left-0 w-full mb-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden py-1 z-50">
+              <div className="absolute bottom-full left-0 w-full mb-1 card-bg rounded-xl shadow-2xl overflow-hidden py-1 z-50 border border-slate-700">
                 {languages.map(l => (
                   <button
                     key={l.code}
@@ -151,8 +147,8 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
               onClick={() => setActiveTab('settings')}
               className={`flex-1 flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-xl border transition-colors ${
                 activeTab === 'settings' 
-                  ? 'bg-indigo-600/20 text-indigo-300 border-indigo-500/40' 
-                  : 'text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-white'
+                  ? 'bg-indigo-600/12 text-indigo-300 border-indigo-500/24' 
+                  : 'text-slate-400 border-transparent hover:bg-slate-800/10 hover:text-white'
               }`}
             >
               <Settings className="w-3.5 h-3.5" />
@@ -171,10 +167,10 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
           {/* User Profile Card */}
           <div 
             onClick={() => setActiveTab('profile')}
-            className={`flex items-center justify-between p-2 rounded-xl cursor-pointer border transition-all ${
+            className={`flex items-center justify-between p-2 rounded-xl cursor-pointer transition-all ${
               activeTab === 'profile'
-                ? 'bg-indigo-600/10 border-indigo-500/40'
-                : 'bg-slate-900/60 border-slate-800/80 hover:bg-slate-800/80'
+                ? 'bg-indigo-600/8 border border-indigo-500/16'
+                : 'hover:bg-slate-800/8'
             }`}
           >
             <div className="flex items-center gap-2.5 overflow-hidden">
@@ -182,8 +178,8 @@ export const Navigation = ({ activeTab, setActiveTab }) => {
                 {user?.name?.[0] || 'P'}
               </div>
               <div className="overflow-hidden text-left">
-                <p className="text-xs font-semibold text-white truncate">{user?.name || 'Pratibha'}</p>
-                <p className="text-[10px] text-slate-400 truncate">{user?.target_role || 'Software Developer'}</p>
+                <p className="text-xs font-semibold text-current truncate">{user?.name || 'Pratibha'}</p>
+                <p className="text-[10px] text-muted truncate">{user?.target_role || 'Software Developer'}</p>
               </div>
             </div>
             <div className="flex items-center gap-1 text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-1 rounded-lg text-[10px] font-bold">

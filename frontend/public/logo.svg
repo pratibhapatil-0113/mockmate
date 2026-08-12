@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="40" fill="url(#g)" />
+  <g transform="translate(60,60)">
+    <circle cx="60" cy="60" r="56" fill="rgba(255,255,255,0.08)" />
+    <text x="60" y="78" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, system-ui, sans-serif" font-weight="800" font-size="68" fill="white">MM</text>
+  </g>
+</svg>
