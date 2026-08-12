@@ -1,14 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="g" x1="0" x2="1">
-      <stop offset="0%" stop-color="#6366f1" />
-      <stop offset="100%" stop-color="#06b6d4" />
+    <linearGradient id="bg" x1="20" y1="18" x2="210" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.52" stop-color="#312E81"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="126" y1="64" x2="190" y2="152" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="user" x1="52" y1="70" x2="110" y2="178" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#C7D2FE"/>
     </linearGradient>
   </defs>
-  <rect width="240" height="240" rx="40" fill="url(#g)" />
-  <g transform="translate(60,60)">
-    <circle cx="60" cy="60" r="56" fill="rgba(255,255,255,0.08)" />
-    <text x="60" y="78" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, system-ui, sans-serif" font-weight="800" font-size="68" fill="white">MM</text>
-  </g>
+
+  <rect x="10" y="10" width="220" height="220" rx="44" fill="url(#bg)"/>
+
+  <!-- User silhouette -->
+  <circle cx="78" cy="90" r="24" fill="url(#user)"/>
+  <path d="M48 170C53 142 68 128 94 128C120 128 136 142 142 170V178H48V170Z" fill="url(#user)"/>
+
+  <!-- Signal line between user and interviewer -->
+  <path d="M108 122H124C133 122 140 129 140 138V143" stroke="#7DD3FC" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Interviewer chat bubble -->
+  <rect x="128" y="66" width="74" height="60" rx="18" fill="url(#panel)"/>
+  <path d="M138 90H182" stroke="#4F46E5" stroke-width="6" stroke-linecap="round"/>
+  <path d="M138 104H170" stroke="#22D3EE" stroke-width="6" stroke-linecap="round"/>
+  <path d="M185 84C185 76.268 191.268 70 199 70C206.732 70 213 76.268 213 84V104C213 111.732 206.732 118 199 118H194L185 127V118H199C191.268 118 185 111.732 185 104V84Z" fill="#22D3EE"/>
+  <path d="M196 80V96M188 88H204" stroke="#ECFEFF" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Active interaction nodes -->
+  <circle cx="108" cy="150" r="8" fill="#A78BFA"/>
+  <circle cx="142" cy="150" r="8" fill="#22D3EE"/>
+  <circle cx="176" cy="150" r="8" fill="#2DD4BF"/>
+  <path d="M110 150H138M144 150H172" stroke="#E0F2FE" stroke-width="4" stroke-linecap="round"/>
 </svg>
